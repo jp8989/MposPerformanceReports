@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+ 
+	<!-- Scans within the base package of the application for @Components to configure as beans -->
+	<!-- @Controller, @Service, @Configuration, etc. -->
+	<context:component-scan base-package="com.kwi.mpos.perfreports" />
+
+	<!-- Enables the Spring MVC @Controller programming model which one is right below? -->
+	<mvc:annotation-driven />
+	<context:annotation-config/>
+	
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />	
+  
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+
+   	<!-- copied from applicationContext .xml because i don't know which one to use at the moment 12-4-15 -->
+   	<bean id="aopService" class="com.kwi.mpos.perfreports.AOPService">
+		<property name="aop" value="Value of aop" />
+	</bean>
+	<bean id="profilingMethodInterceptorBean" class="com.kwi.mpos.perfreports.ProfilingMethodInterceptor" />
+	<bean id="aopServiceProxy" 
+	    class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="aopService" />
+		<property name="interceptorNames">
+			<list>
+				<value>profilingMethodInterceptorBean</value>
+			</list>
+		</property>
+	</bean>
+	<!-- end:Method2-->	
+ 
+</beans>

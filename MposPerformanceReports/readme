@@ -1,0 +1,45 @@
+1) Dynamic web project
+2) convert to maven : right click/configure/convert to maven
+3) add log4j.properties file to src/main/resources
+4) add MposPerformanceReports-servlet.xml to WebContent/WEB-INF
+6) create web.xml and provide a name for the servlet
+7) created src package...com.kwi.mpos.perfreports
+	added ProfileExecution @interface for annotation.
+	added ProfilingAdvisor.java
+	added ProfilingMethodInterceptor.java
+	added MposPerformanceReportsServlet.java
+8) added spring, servlet, and slf4j dependencies to pom.xml
+
+
+QUESTION: Why is it that when dragging/dropping file from another project i get errors like can't find import 
+10) run maven clean install
+11) start server
+
+Could not deploy to tomcat 7.0
+
+The server does not support 3.1 of the j2ee web module specification.
+Tried to change with right-click project-->options/project facets/Web module tried to change to 2.5 
+
+Notes from web...
+Following these steps I continued to get stuck because 
+I previously generated the web.xml
+(with a right clic on <project>/Deployment Descriptor + Generate Deployment Descriptor Stub). 
+I resolved this issue deleting the src/main/webapp/WEB-INF/web.xml file. 
+Note that web.xml is not mandatory anymore with servlet version later than 3.0 if you use annotations.
+
+12/4/15
+http://crunchify.com/spring-mvc-how-to-declare-a-bean-in-spring-application/
+
+What is the difference between annotated beans or .xml config files for 
+application context. 
+
+http://howtodoinjava.com/2014/07/19/spring-mvc-difference-between-contextannotation-config-vs-contextcomponent-scan/
+
+Context:annotation-config is used to activate applied annotatons in
+already registered beans in application context.
+
+context:component-scan does what context:annotatioon-config does 
+and also it scans the packages and registers beans in application
+context. 
+
+copied all the config from MposPerformanceReports-servlet.xml to applicationContext.xml and it WORKED. 
